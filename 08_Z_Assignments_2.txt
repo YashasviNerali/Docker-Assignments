@@ -1,0 +1,87 @@
+Your company is ready to move forward with using Docker to run their applications. However, they have some complex container apps that can take advantage of the cluster management and orchestration features of Docker swarm. You have been asked to stand up a simple Docker swarm cluster to be used for some initial testing. A set of servers has already been provisioned for this purpose. The swarm cluster should meet the following criteria:
+
+One Swarm manager.
+Two worker nodes.
+All nodes should use Docker CE version 5:18.09.5~3-0~ubuntu-bionic.
+Both worker nodes should be joined to the cluster.
+Any non-root user should be able to run docker commands on all three servers.
+
+[NOTE: Write the series of commands to achieve above in this file below the question scenario with documentation]
+
+Good luck!
+
+=============================================================================================================================================================
+Solution 
+Configure all nodes with host file
+Edit the /etc/hosts file across all three nodes via gedit or vim and do the following changes:
+
+<ip-address>  manager
+<ip-address>  wrkr1
+<ip-address>  wrkr2
+
+
+Set up swarm 
+
+Install Docker Engine on the Swarm Manager:
+sudo apt-get update
+sudo apt-get -y install \
+  apt-transport-https \
+  ca-certificates \
+  curl \
+  gnupg-agent \
+  software-properties-common
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - 
+sudo apt-key fingerprint 0EBFCD88
+
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+sudo apt-get update
+sudo apt-get install -y docker-ce=5:18.09.5~3-0~ubuntu-bionic docker-ce-cli=5:18.09.5~3-0~ubuntu-bionic containerd.io
+
+sudo usermod -a -G docker cloud_user
+
+*****One Swarm manager.
+
+ ping wrkr1
+ ping wrkr2
+ 
+#The first machine acts as the manager, which executes management commands and authenticates workers to join the swarm, and the second is a worker.
+#You can send commands to your VMs using docker-machine ssh. 
+docker swarm init --advertise-addr 172.0.17.89
+#Swarm initialized: current node as manager.
+
+
+
+*****Two worker nodes.
+
+docker-machine create --driver virtualbox myvm1
+docker-machine create --driver virtualbox myvm2
+
+*****All nodes should use Docker CE version 5:18.09.5~3-0~ubuntu-bionic.
+
+sudo apt-get install -y docker-ce=5:18.09.5~3-0~ubuntu-bionic docker-ce-cli=5:18.09.5~3-0~ubuntu-bionic containerd.io
+
+
+
+*****Both worker nodes should be joined to the cluster.
+
+#To add a workers to this swarm, run the following command:
+#Always run docker swarm init and docker swarm join with port 2377 (the swarm management port), or no port at all and let it take the default.
+#The machine IP addresses returned by docker-machine ls include port 2376, which is the Docker daemon port. Do not use this port or you may experience errors.
+$docker swarm join --token SWMTKN-1-5jjhjkko53v8n4s1oz9uiiroxemxxbosqbaajuh8iw6lm3mygi-dcf465ofg7mruk6bbx7qn7nse 172.17.0.19:2377
+
+
+*****Any non-root user should be able to run docker commands on all three servers.
+
+usermod -aG docker manager
+usermod -aG docker wrkr1
+usermod -aG docker wrkr2
+
+
+==========================================================================================================================================================
+Ref -
+https://linuxconfig.org/how-to-configure-docker-swarm-with-multiple-docker-nodes-on-ubuntu-18-04

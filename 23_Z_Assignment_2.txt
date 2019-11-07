@@ -30,6 +30,13 @@ Deploy a Docker application stack that meets the following specifications:
 2. The stack runs the Fruit, Vegetable, and All Products services.
 
 
+# Create swarm cluster 
+
+	$ docker swarm init --advertise-addr 172.17.0.56
+
+ 	$ docker swarm join --token SWMTKN-1-5lyza3iodu3wuc704myt08v9pktxg68s4td743mme0kxvx3rdz-87il11w28g0j1qr4zx05giha9 172.17.0.98:2377
+
+
 # create yaml file with all the services invlving complex container to be maintanied via stack
 vi produce.yml 
 
@@ -53,34 +60,35 @@ services:
    - VEGETABLE_PORT=8082
  
  allproduct:
-  image: linuxacademycontent/all-products:1.0.0
-  ports:
+  image: linuxacademycontent/all-products:1.0.0:curl
+   command: /bin/sh -c "while true; do echo $$MESSAGE; curl vegetables:80; sleep 10; done"
+   ports:
    - 8080:80
   environment:
    - VEGETABLE_HOST=http://172.17.0.72
    - VEGETABLE_PORT=8080 
 
-# Deply stack 
-docker stack deploy -c produce.yml  produce
+# Deploy stack 
+$ docker stack deploy -c produce.yml  produce
 
 
 3. The All Products service is able to query the Fruit and Vegetable services.
- curl http://172.17.0.72:8081 
- curl http://172.17.0.72:8082
+$ curl http://172.17.0.72:8081 
+$ curl http://172.17.0.72:8082
+
 4. The All Products service is published on port 8080.
 #all product contents was not disolayed but fruit & vegetable service contents were displayed sperately
 
-One you have deployed the stack, you can verify whether it is working by querying the All Products service:
-
-curl localhost:8080
+#Once you have deployed the stack, you can verify whether it is working by querying the All Products service:
+$ curl localhost:8080
 
 If the stack is set up correctly, you should get a combined list of fruits and vegetables.
 
 Step 2
-Once you have deployed the stack and verified that it is working, modify the stack by scaling both the Fruit and Vegetable services up to 3 replicas.
-docker service update --replicas 3 produce_vegetable
-docker service update --replicas 3 produce_fruit
+#Once you have deployed the stack and verified that it is working, modify the stack by scaling both the Fruit and Vegetable services up to 3 replicas.
+$ docker service update --replicas 3 produce_vegetable
+$ docker service update --replicas 3 produce_fruit
 or
-docker service scale produce_fruit=4
+$ docker service scale produce_fruit=4
 
 Good luck!

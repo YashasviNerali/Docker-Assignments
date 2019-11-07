@@ -81,10 +81,10 @@ o/p - f949e7d76d63befffc8eec2cbf8a6f509780f96fb3bacbdc24068d594a77f043
 	docker inspect 42ae7dc7f050 | grep "IPAddress"
 
 13. Which Port it is using?
-	docker in?spect mytomcat
+	docker inspect mytomcat
 
 14. Try to access the Tomcat's home page from your machine/vm.
-	172.0.17.54:8080
+	curl 172.0.17.54:8080
 
 15. What is the disk size of Apache Tomcat image?
 	docker image ls | grep tomcat
@@ -185,13 +185,15 @@ or	docker inspect f2d575484469 | grep ExposedPort
 
 37. Do you have running tomcat container? If yes, Stop it and kill all tomcat container.
 	docker stop 6ec2992d41ca	
-kill -KILL $(docker inspect --format '{{.State.Pid}}' containername)
-	
+	docker kill 6ec2992d41ca
 
 
 38. Create an index.html file with following code in it:-
 	<h1>This is Tomcat Container</h1>
 Now, Start a tomcat container in such a way that on hitting its URL for home page it should show the above html page.
+# crete index.html with message & give path where it is saved and run a container 
+	docker run -it -d -p 8080:8080 -v /root/index.html:/usr/local/tomcat/webapps/ROOT/index.jsp --name tomcat tomcat:latest 
+
 
 39. type below command:-
 	docker images --help

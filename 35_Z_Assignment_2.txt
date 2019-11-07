@@ -16,24 +16,29 @@ prices-total-price
 Good luck!
 
 =============================================================================================================================================================
-Create swarm cluster 
+#Create swarm cluster 
 
 	$ docker swarm init --advertise-addr 172.17.0.98
 
  	$ docker swarm join --token SWMTKN-1-5lyza3iodu3wuc704myt08v9pktxg68s4td743mme0kxvx3rdz-87il11w28g0j1qr4zx05giha9 172.17.0.98:2377
 
+
 1. Create an overlay network called prices-overlay-net.
-#
-docker network create -d overlay prices-overlay-net
-output - jyxj56ov4e7pery2yrmfuo80c
+
+$ docker network create -d overlay prices-overlay-net
+#output - jyxj56ov4e7pery2yrmfuo80c
+
 
 2. Create a service called base-price with 3 replicas using the linuxacademycontent/prices-base-price:1 image. Configure the service to use the prices-overlay-net network.
 	$ docker service create --name base-price --publish target=80,published=81 --replicas=3 --network prices-overlay-net linuxacademycontent/prices-base-price:1
 
+
 3. Create a service called sales with 3 replicas using the linuxacademycontent/prices-sales:1 image. Configure the service to use the prices-overlay-net network.
 	$docker service create --name sales --publish target=80,published=83 --replicas=3 --network prices-overlay-net linuxacademycontent/prices-sales:1
 
-4. Create a service called total-price with 2 replicas using the linuxacademycontent/prices-total-price:1 image. Configure the service to use the prices-overlay-net network. Expose this service's port 80 on port 8080.
- 	$ docker service create --name total-price --publish target=80,published=80 --replicas=2 --network prices-overlay-net linuxacademycontent/prices-total-price:1
 
-#connection was refused when tried accessing $ curl http://172.17.0.98
+4. Create a service called total-price with 2 replicas using the linuxacademycontent/prices-total-price:1 image. Configure the service to use the prices-overlay-net network. Expose this service's port 80 on port 8080.
+ 	$ docker service create --name total-price --publish target=8080,published=80 --replicas=2 --network prices-overlay-net linuxacademycontent/prices-total-price:1
+
+#verify result at :
+$ curl http://172.17.0.98

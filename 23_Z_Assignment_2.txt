@@ -30,7 +30,7 @@ Deploy a Docker application stack that meets the following specifications:
 2. The stack runs the Fruit, Vegetable, and All Products services.
 
 
-# Create swarm cluster 
+# Create swarm cluster - manager & worker nodes
 
 	$ docker swarm init --advertise-addr 172.17.0.56
 
@@ -77,12 +77,9 @@ $ curl http://172.17.0.72:8081
 $ curl http://172.17.0.72:8082
 
 4. The All Products service is published on port 8080.
-#all product contents was not disolayed but fruit & vegetable service contents were displayed sperately
-
 #Once you have deployed the stack, you can verify whether it is working by querying the All Products service:
-$ curl localhost:8080
-
-If the stack is set up correctly, you should get a combined list of fruits and vegetables.
+$ curl 172.0.17.72:8080
+#if the stack is set up correctly, you should get a combined list of fruits and vegetables.
 
 Step 2
 #Once you have deployed the stack and verified that it is working, modify the stack by scaling both the Fruit and Vegetable services up to 3 replicas.

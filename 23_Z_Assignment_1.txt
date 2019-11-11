@@ -1,6 +1,17 @@
 Your supermarket company is working on expanding their Docker infrastructure. They have an existing service that provides a list of fruit sold in their stores. After measuring the amount of load on this service, they have asked you to scale this service up to a higher number of replicas.
 
 In addition, there is a new service that provides a list of vegetables. This new service needs to be created in the cluster. Set up the swarm cluster to complete the lab, ensure that the swarm meets the following specifications:
+----------------------------
+# Set up a docker swarm & worker nodes first
+   $ docker swarm init --advertise-addr 172.17.0.32
+   Swarm initialized: current node (1hwc7tyrdg7n1n17th9czsfal) is now a manager.
+# add a worker to this swarm, run the following command:
+    $ docker swarm join --token SWMTKN-1-31kezav5e6cwejxjyu1uvpkdbdtcxvinu07seaonornc9vp7dr-eb0ajzs51iyq78lckxpjx80c4 172.17.0.32:2377
+
+node01 $ docker swarm join --token SWMTKN-1-31kezav5e6cwejxjyu1uvpkdbdtcxvinu07seaonornc9vp7dr-eb0ajzs51iyq78lckxpjx80c4 172.17.0.32:2377
+This node joined a swarm as a worker.
+	
+==========================
 
 1. Scale the service called products-fruit to 5 replicas.
 # create a service so that it becomes easy to kep replicas which means high acvaialability in case any container service goes down
@@ -24,11 +35,29 @@ docker service update --replicas 3 products-vegetables
 
 
 You can test the products-fruit service from any swarm node (including the manager) with curl localhost:8080.
-#displays all fruits
-curl http://172.17.0.32:8080
+#displays all fruits, try on manager 7 worker node aswell
+$ curl http://172.17.0.32:8080
+# o/p-
+{
+  "description": "A list of fruits.",
+  "fruits": [
+    "apple",
+    "apricot",
+    "avocado",
+    "banana",
+
 
 Once products-vegetables is running, you should be able to test it from any swarm node (including the manager) with curl localhost:8081.
-#displays all vegetables
-curl http://172.17.0.32:8081
+#displays all vegetables, try on manager 7 worker node aswell
+$ curl http://172.17.0.32:8081
+# o/p --
+{
+    "description": "A list of vegetables.",
+    "vegetables": [
+        "acorn squash",
+        "alfalfa sprout",
+        "amaranth",
+
+
 --->>>verified
 Good luck!!

@@ -38,7 +38,58 @@ $ docker network create -d overlay prices-overlay-net
 
 
 4. Create a service called total-price with 2 replicas using the linuxacademycontent/prices-total-price:1 image. Configure the service to use the prices-overlay-net network. Expose this service's port 80 on port 8080.
- 	$ docker service create --name total-price --publish target=8080,published=80 --replicas=2 --network prices-overlay-net linuxacademycontent/prices-total-price:1
+ 	$ docker service create --name total-price --publish target=80,published=80 --replicas=2 --network prices-overlay-net linuxacademycontent/prices-total-price:1
+
+If everything is set up correctly, you should be able to access the total prices list with:
+$ curl localhost:8080.
 
 #verify result at :
-$ curl http://172.17.0.98
+$ curl http://172.17.0.98:8080
+	{
+    "description": "A list of total prices, including discounts.",
+    "products": [
+        {
+            "name": "apple",
+            "price": "0.98"
+        },
+        {
+            "name": "banana",
+            "price": "1.00"
+        },
+        {
+            "name": "blueberry",
+            "price": "3.99"
+        },
+        {
+            "name": "coconut",
+            "price": "4.99"
+        },
+        {
+            "name": "cranberry",
+            "price": "2.09"
+        },
+        {
+            "name": "cucumber",
+            "price": "0.50"
+        },
+        {
+            "name": "currant",
+            "price": "2.00"
+        },
+        {
+            "name": "olive",
+            "price": "2.50"
+        },
+        {
+            "name": "orange",
+            "price": "1.31"
+        },
+        {
+            "name": "pamelo",
+            "price": "3.00"
+        },
+        {
+            "name": "papaya",
+            "price": "4.75"
+        }
+    ]

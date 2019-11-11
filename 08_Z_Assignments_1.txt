@@ -11,7 +11,7 @@ Use Docker CE version 5:18.09.5~3-0~ubuntu-bionic.
 	sudo apt-get upgrade 
 
 If Docker is not available in the official Ubuntu repositories. So we will add the Docker repository to get the latest version of Docker.
-First install the necessary certificates and to allow apt package manager to use a repository over HTTPS using command:
+#First install the necessary certificates and to allow apt package manager to use a repository over HTTPS using command:
 
 	sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
 
@@ -21,6 +21,12 @@ First install the necessary certificates and to allow apt package manager to use
 
 #Add the Docker official repository:
 	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+#List out all available versions of docker-ce available to install.
+	apt-cache madison docker-ce
+
+#List out all available versions of docker-ce-cli available to install.
+	apt-cache madison docker-ce-cli
 
 #Run the following command to install Docker CE in Ubuntu server :
 	sudo apt install docker-ce=5:18.09.5~3-0~ubuntu-bionic docker-ce-cli=5:18.09.5~3-0~ubuntu-bionic containerd.io

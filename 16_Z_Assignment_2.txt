@@ -45,19 +45,11 @@ $ openssl req \
   -newkey rsa:4096 -nodes -sha256 -keyout certs/domain.key \
   -x509 -days 365 -out certs/domain.crt
 
-# docker login 
-$ docker login 172.17.0.155
 
 
 #However, this method of accessing the registry is very insecure. It turns off certificate verification entirely, exposing us to man-in-the-middle attacks. So, let's do this the right way.
-
-First, log out of the private registry:
-$ docker logout 172.17.0.155
-
-Next, remove the insecure-registries key and value from /etc/docker/daemon.json.
-
-
-Restart Docker:
+Next, remove the insecure-registries key and value from /etc/docker/daemon.json
+#Restart Docker:
 $ sudo systemctl restart docker
 
 

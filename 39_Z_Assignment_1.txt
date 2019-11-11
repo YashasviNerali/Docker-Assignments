@@ -14,7 +14,7 @@ Once you have pushed the signed image, you should be able to run it with the lin
 
 Good luck!
 =============================================================================================================================================================
-#login to docker hub with ur username & password of hub
+#login to docker hub with ur username & password of registry
 docker login
 usename
 password
@@ -25,6 +25,8 @@ $ docker trust key generate yashasvinerali
 
 # adding my username as self signer for security
 $ docker trust signer add --key /root/yashasvinerali.pub yashasvinerali yashasvinerali/ip-10-0-1-102:443/content-dca-tea
+# getting not autorised error
+
 
 #pull unsigned image-
 $ docker pull linuxacademycontent/content-dca-tea:1

@@ -110,7 +110,6 @@ o/p - f949e7d76d63befffc8eec2cbf8a6f509780f96fb3bacbdc24068d594a77f043
             ]
 
 17. Find out which port is exposed for tomcat?
-	docker port mytomcat or docker ps
 or	docker inspect f2d575484469 | grep ExposedPort
 
 
@@ -160,15 +159,16 @@ or	docker inspect f2d575484469 | grep ExposedPort
 	exit
 
 30. Check if the ubuntu container is running.
-	docke ps 
+	docke ps | grep ubuntu
 
 31. Create a new ubuntu container out of the same image as that previous container in attached mode.
 	docker run -it --name ubu2 ubuntu:19.04	
 
 32. Login as a root user
-	logged default
+	docker exec --user root -it 218a007aaccf /bin/bash
 
 33. Check if you can see the file created in previous container, you will not see the file as well as software that you installed in the previous container. Now kill this Container.
+#file not available in new container	
 	ls -l
 	docker stop 22a1b868b7a8
 	docker rm 2a1b868b7a8

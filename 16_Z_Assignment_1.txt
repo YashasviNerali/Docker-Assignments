@@ -40,6 +40,12 @@ $ pwd
 # add all deatils of nginx file
 $ vi nginx.conf
 #create docker file with nginx  as mentioned
+
+#{# Copy fruit.json file from the static directory.
+     ADD /static/fruit.json /usr/share/nginx/html/
+# Copy a configuration file from the current directory. Once we hit the port 8080 it will redirect to the fruit.json file
+     ADD nginx.conf /etc/nginx/        }
+
 $ vi Dockerfile
 $ cat Dockerfile
 FROM  nginx:1.15.8

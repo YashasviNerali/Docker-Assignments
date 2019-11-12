@@ -25,7 +25,8 @@ $ docker trust key generate yashasvinerali
 
 # adding my username as self signer for security
 $ docker trust signer add --key /root/yashasvinerali.pub yashasvinerali yashasvinerali/ip-10-0-1-102:443/content-dca-tea
-# getting not autorised error
+#- Adding signer "testuser" to testuser/dct-test...
+#ERROR -you are not authorized to perform this operation: server returned 401. 
 
 
 #pull unsigned image-

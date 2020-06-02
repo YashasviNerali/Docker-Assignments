@@ -1,7 +1,7 @@
 Your supermarket company is working on expanding their Docker infrastructure. They have an existing service that provides a list of fruit sold in their stores. After measuring the amount of load on this service, they have asked you to scale this service up to a higher number of replicas.
 
 In addition, there is a new service that provides a list of vegetables. This new service needs to be created in the cluster. Set up the swarm cluster to complete the lab, ensure that the swarm meets the following specifications:
-----------------------------
+
 # Set up a docker swarm & worker nodes first
    $ docker swarm init --advertise-addr 172.17.0.32
    Swarm initialized: current node (1hwc7tyrdg7n1n17th9czsfal) is now a manager.
@@ -11,31 +11,29 @@ In addition, there is a new service that provides a list of vegetables. This new
 node01 $ docker swarm join --token SWMTKN-1-31kezav5e6cwejxjyu1uvpkdbdtcxvinu07seaonornc9vp7dr-eb0ajzs51iyq78lckxpjx80c4 172.17.0.32:2377
 This node joined a swarm as a worker.
 	
-==========================
 
 1. Scale the service called products-fruit to 5 replicas.
 # create a service so that it becomes easy to kep replicas which means high acvaialability in case any container service goes down
-docker service scale products-fruit=5
-or
-docker service create --name products-fruit -p 8080:80 linuxacademycontent/fruit-service
 
+$docker service create --name products-fruit -p 8080:80 linuxacademycontent/fruit-service:1.0.0 
+$docker service scale products-fruit=5
 
 2. Create a new service called products-vegetables running the linuxacademycontent/vegetable-service:1.0.0 image.
 # crete a service of vegetable-service image where container runs on 8081
-docker service create --name products-vegetables -p 8081:80 linuxacademycontent/vegetable-service:1.0.0 
+$docker service create --name products-vegetables -p 8081:80 linuxacademycontent/vegetable-service:1.0.0 
 
 3. Publish products-vegetables on port 8081. The application listens on port 80.
 #transfers data to & from network service using protoco; like https ,http etc
 #should display all vegetable list on cli 
-curl http://172.17.0.32:8081
+$curl http://172.17.0.32:8081
 
 4. Run products-vegetables with 3 replicas.
-# let service have 3 replicas of vegetables on any node 
+# let service hae 3 replicas of vegetables on any node 
 docker service update --replicas 3 products-vegetables
 
 
 You can test the products-fruit service from any swarm node (including the manager) with curl localhost:8080.
-#displays all fruits, try on manager 7 worker node aswell
+#displays all fruits, try on manager, worker node aswell
 $ curl http://172.17.0.32:8080
 # o/p-
 {
@@ -60,4 +58,3 @@ $ curl http://172.17.0.32:8081
 
 
 --->>>verified
-Good luck!!

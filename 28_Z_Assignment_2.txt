@@ -63,7 +63,7 @@ $ cp   <---sourcefile--->        <---targetfile--->
 
 $ docker plugin install --grant-all-permissions vieux/sshfs
  
-------------------------------------------------------------------------------
+
 4. Create a service called nginx-web using the nginx:latest image with 3 replicas. Mount the shared volume to the service's containers at /etc/nginx/. Publish port 9773 on the service containers to port 8080 on the swarm nodes.
  
 $ docker service create --name nginx-web --replicas 3 \
@@ -101,4 +101,3 @@ vieux/sshfs:latest   nginx-config-vol
 
 
 
-Good luck!

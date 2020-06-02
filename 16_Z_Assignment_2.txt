@@ -33,7 +33,7 @@ Good luck!
 
 
 #Secure the registry by generating an htpasswd file to be used for authentication:
-$ docker run --entrypoint htpasswd registry:2 -Bbn testuser password > auth/htpasswd
+$ docker run --entrypoint htpasswd registry:2 -Bbn docker d0ck3rrU73z > auth/htpasswd
 
 
 
@@ -68,7 +68,7 @@ docker run -d -p 443:443 --restart=always --name registry \
 #o/p for above  cf365f13e463244c742cc61d5d5cd7c51ff5acd301c4542190a5100748885f0a
 
 #Login to registry
-$ docker login -udocker -pd0ck3rrU73z 172.17.0.155:443
+$ docker login -udocker -pd0ck3rrU73z  172.17.0.155:443
 
 #Pull ubuntu image
 $ docker pull tomcat:8.0
